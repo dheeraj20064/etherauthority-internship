@@ -4,7 +4,7 @@ pragma solidity ^0.8.0;
 contract TaskCompletionToken {
     string public name = "Task Completion Token";
     string public symbol = "TCT";
-    uint8 public decimals = 18;
+    uint8 public constant decimals = 18;
     uint256 public totalSupply;
     address public owner;
 
