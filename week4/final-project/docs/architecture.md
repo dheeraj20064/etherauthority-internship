@@ -338,7 +338,7 @@ UI re-renders with new data
 |-----------|----------|---------|
 | Frontend | Vercel | Auto-deploy from GitHub `main` branch |
 | InternRewardToken | SCAI Mainnet | `0x9f11C08da4030676d9234B49FD9A374af22e7145` |
-| StakingContract | SCAI Mainnet | `[your StakingContract address]` |
+| StakingContract | SCAI Mainnet | `0x3C22C41Ff00ce7Fd02d67C99c57062D04E3Ec30D` |
 | Source Code | GitHub | [github.com/dheeraj20064/etherauthority-internship](https://github.com/dheeraj20064/etherauthority-internship) |
 | Block Explorer | SecureChain | [explorer.securechain.ai](https://explorer.securechain.ai) |
 
