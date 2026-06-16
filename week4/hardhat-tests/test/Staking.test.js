@@ -99,4 +99,46 @@ describe("StakingContract", function () {
         await staking.setRewardRate(20)
         expect(await staking.rewardRate()).to.equal(20)
     })
+    it("Should fail withdraw if not staking", async function () {
+        await expect(
+            staking.connect(user1).withdraw()
+        ).to.be.revertedWith("Not staking")
+    })
+
+    it("Should fail claimReward if not staking", async function () {
+        await expect(
+            staking.connect(user1).claimReward()
+        ).to.be.revertedWith("Not staking")
+    })
+
+    it("Should return 0 reward immediately after staking", async function () {
+        const amount = ethers.parseUnits("100", 18)
+        await token.connect(user1).approve(staking.target, amount)
+        await staking.connect(user1).stake(amount)
+
+        const reward = await staking.calculateReward(user1.address)
+        expect(reward).to.equal(0)
+    })
+
+    it("Should not allow owner functions to be called by non-owner", async function () {
+        await expect(
+            staking.connect(user1).fundRewardPool(
+                ethers.parseUnits("10", 18)
+            )
+        ).to.be.revertedWith("Not owner")
+    })
+
+    it("Should correctly track totalStaked across multiple users", async function () {
+        const amount1 = ethers.parseUnits("100", 18)
+        const amount2 = ethers.parseUnits("50", 18)
+
+        await token.connect(user1).approve(staking.target, amount1)
+        await staking.connect(user1).stake(amount1)
+
+        await token.transfer(owner.address, 0) // no-op, owner already has tokens
+        await token.approve(staking.target, amount2)
+        await staking.stake(amount2)
+
+        expect(await staking.totalStaked()).to.equal(amount1 + amount2)
+    })
 })
