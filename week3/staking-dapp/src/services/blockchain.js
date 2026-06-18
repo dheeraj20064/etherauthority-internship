@@ -129,3 +129,31 @@ export const getTotalStaked = async () => {
     const total = await contract.totalStaked()
     return ethers.formatUnits(total, 18)
 }
+
+export const parseError = (err) => {
+    const message = err.message || err.reason || ""
+
+    if (message.includes("Insufficient balance")) {
+        return "The contract doesn't have enough tokens right now. Please contact the admin to top up the reward pool."
+    }
+    if (message.includes("Already staking")) {
+        return "You're already staking. Withdraw your current stake before staking again."
+    }
+    if (message.includes("Not staking")) {
+        return "You don't have any active stake to claim or withdraw."
+    }
+    if (message.includes("Amount must be greater than 0")) {
+        return "Please enter an amount greater than 0."
+    }
+    if (message.includes("Not owner")) {
+        return "Only the contract owner can perform this action."
+    }
+    if (message.includes("user rejected") || message.includes("ACTION_REJECTED")) {
+        return "Transaction was cancelled."
+    }
+    if (message.includes("insufficient funds")) {
+        return "You don't have enough SCAI to pay for gas fees."
+    }
+
+    return "Something went wrong. Please try again."
+}
