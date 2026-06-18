@@ -67,7 +67,7 @@ export const CONTRACTS = {
     },
 
     StakingContract: {
-        address: "0x3C22C41Ff00ce7Fd02d67C99c57062D04E3Ec30D",
+        address: "0x8c082162B3A6372491Ef417037b763F0D53d5053",
         abi: [
             {
                 "inputs": [{"internalType": "address","name": "_stakingToken","type": "address"}],
