@@ -4,6 +4,7 @@ import {
     approveStaking, 
     stakeTokens 
 } from "../services/blockchain"
+import { parseError } from "../services/blockchain"
 
 export default function StakeTokens({ 
     walletAddress, 
@@ -49,9 +50,8 @@ export default function StakeTokens({
             setAmount("")
             setStep("")
             onSuccess()
-        } catch (err) {
-            setError(err.message || "Staking failed")
-            setStep("")
+        }  catch (err) {
+        setError(parseError(err))
         } finally {
             setLoading(false)
         }

@@ -1,6 +1,8 @@
 import { useState } from "react"
 import { withdrawTokens, claimReward } from "../services/blockchain"
 import { NETWORK } from "../config/contracts"
+import { parseError } from "../services/blockchain"
+
 
 export default function WithdrawReward({ 
     walletAddress, 
@@ -27,8 +29,8 @@ export default function WithdrawReward({
             )
             onSuccess()
         } catch (err) {
-            setError(err.message || "Withdrawal failed")
-        } finally {
+    setError(parseError(err))
+        }  finally {
             setLoading(false)
             setAction("")
         }
@@ -49,8 +51,8 @@ export default function WithdrawReward({
                  View: ${NETWORK.explorer}/tx/${tx.hash}`
             )
             onSuccess()
-        } catch (err) {
-            setError(err.message || "Claim failed")
+        }  catch (err) {
+            setError(parseError(err))
         } finally {
             setLoading(false)
             setAction("")
